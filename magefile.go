@@ -27,7 +27,7 @@ func Test() error {
 	mg.Deps(Lint)
 
 	return pipe.ExecStdout(
-		"go test ./... -timeout 10s -cover -json",
+		"go test ./... -race -cover -json",
 		"tparse -all",
 	)
 }
