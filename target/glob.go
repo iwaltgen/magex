@@ -10,7 +10,7 @@ import (
 // Glob expands each of the globs (file patterns) into individual sources and
 // then calls Path on the result, reporting if any of the resulting sources have
 // been modified more recently than the destination.
-// syntax for Glob patterns: github.com/mattn/go-zglob
+// Powered by glob: github.com/mattn/go-zglob
 func Glob(dst string, globs ...string) (bool, error) {
 	for _, g := range globs {
 		files, err := zglob.Glob(g)

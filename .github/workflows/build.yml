@@ -24,10 +24,23 @@ jobs:
 
     - uses: actions/cache@v2
       with:
-        path: ~/go/pkg/mod
+        path: |
+          ~/go/pkg/mod
+          ~/go/bin
+          ~/.cache/golangci-lint
         key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
         restore-keys: ${{ runner.os }}-go-
 
-    - uses: magefile/mage-action@v1
+    - name: check tools
+      id: check_tools
+      uses: andstor/file-existence-action@v1
       with:
-        args: test
+        files: '/home/runner/go/bin/mage, /home/runner/go/bin/golangci-lint, /home/runner/go/bin/tparse'
+
+    - name: setup tools
+      if: steps.check_tools.outputs.files_exists != 'true'
+      run: go run ./tools/mage.go setup
+
+    - name: test
+      run: mage test
+
