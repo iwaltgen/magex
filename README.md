@@ -1,0 +1,2 @@
+# magex
+magefile extensions
