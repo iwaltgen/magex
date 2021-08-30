@@ -39,7 +39,7 @@ jobs:
 
     - name: setup tools
       if: steps.check_tools.outputs.files_exists != 'true'
-      run: go run ./tools/mage.go setup
+      run: go run ./tool/mage.go setup
 
     - name: test
       run: mage test
