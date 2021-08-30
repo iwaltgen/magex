@@ -69,14 +69,9 @@ func loadImport(files ...string) ([]string, error) {
 }
 
 func config() *packages.Config {
-	mode := packages.NeedName
-	mode |= packages.NeedFiles
+	mode := packages.NeedFiles
 	mode |= packages.NeedImports
-	mode |= packages.NeedDeps
-	mode |= packages.NeedTypes
 	mode |= packages.NeedSyntax
-	mode |= packages.NeedTypesInfo
-	mode |= packages.NeedModule
 	return &packages.Config{
 		Mode:  mode,
 		Tests: false,
