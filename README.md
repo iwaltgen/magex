@@ -1,5 +1,8 @@
 # Magex
 
+[![Build](https://github.com/iwaltgen/magex/actions/workflows/build.yml/badge.svg)](https://github.com/iwaltgen/magex/actions/workflows/build.yml)
+[![CodeQL](https://github.com/iwaltgen/magex/actions/workflows/code-ql.yml/badge.svg)](https://github.com/iwaltgen/magex/actions/workflows/code-ql.yml)
+
 helper extensions for magefile
 
 ## Extensions
