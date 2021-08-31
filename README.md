@@ -13,5 +13,6 @@ helper extensions for magefile
 | dep     | helper package for dependencies check   |
 | github  | helper package for github file download |
 | script  | helper package for \*nix script         |
-| spinner | helper package for spinner              |
+| semver  | helper package for semantic versioning  |
+| spinner | helper package for ascii spinner        |
 | target  | helper package for check modified files |
