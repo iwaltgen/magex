@@ -6,13 +6,13 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Masterminds/semver"
 	"github.com/fatih/color"
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
 
 	"github.com/iwaltgen/magex/dep"
 	"github.com/iwaltgen/magex/script"
+	"github.com/iwaltgen/magex/semver"
 	"github.com/iwaltgen/magex/spinner"
 )
 
@@ -51,34 +51,16 @@ func (VERSION) Show() {
 }
 
 // Bump version
-func (VERSION) Bump(kind string) error {
-	curVer, _ := semver.NewVersion(version)
-	nextVer := *curVer
-
-	switch kind {
-	case "major":
-		nextVer = curVer.IncMajor()
-
-	case "minor":
-		nextVer = curVer.IncMinor()
-
-	case "patch":
-		nextVer = curVer.IncPatch()
-
-	default:
-		return fmt.Errorf(`invalid bump version type: %s
-
-Semantic Versioning (https://semver.org)
-major: bump up next major version
-minor: bump up next minor version
-patch: bump up next patch version
-`, kind)
+func (VERSION) Bump(typ string) error {
+	current := version
+	next, err := semver.Bump(current, typ)
+	if err != nil {
+		return err
 	}
 
-	nextVersion := nextVer.String()
 	files := []string{"magefile.go", "README.md"}
 	for _, file := range files {
-		if _, err := script.File(file).Replace(version, nextVersion).WriteFile(file); err != nil {
+		if _, err := script.File(file).Replace(current, next).WriteFile(file); err != nil {
 			return fmt.Errorf("failed to bump version `%s`: %w", file, err)
 		}
 	}
@@ -89,7 +71,7 @@ patch: bump up next patch version
 		}
 	}
 
-	color.Green("new version: %s", nextVersion)
+	color.Green("new version: %s", next)
 	return gitcmd("commit", "-m", "chore: bump version")
 }
 

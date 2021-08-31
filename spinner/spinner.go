@@ -9,6 +9,7 @@ import (
 
 // Start run spinner with the supplied options.
 func Start(d time.Duration) func() {
+	// TODO(iwaltgen): add options
 	s := spinner.New(spinner.CharSets[11], d)
 	s.Start()
 	return func() {

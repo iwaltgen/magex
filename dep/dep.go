@@ -21,12 +21,12 @@ func GlobImport(globs ...string) ([]string, error) {
 			return nil, err
 		}
 		if len(files) == 0 {
-			return nil, fmt.Errorf("failed to glob didn't match any files: %s", g)
+			return nil, fmt.Errorf("glob didn't match any files: %s", g)
 		}
 
 		ret, err := loadImport(files...)
 		if err != nil {
-			return nil, fmt.Errorf("failed to load import(%s): %w", g, err)
+			return nil, fmt.Errorf("load import(%s): %w", g, err)
 		}
 
 		for _, v := range ret {
@@ -45,7 +45,7 @@ func GlobImport(globs ...string) ([]string, error) {
 func loadImport(files ...string) ([]string, error) {
 	pkgs, err := packages.Load(config(), files...)
 	if err != nil {
-		return nil, fmt.Errorf("failed to load packages: %w", err)
+		return nil, fmt.Errorf("load packages: %w", err)
 	}
 
 	imports := []string{}
