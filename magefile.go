@@ -70,7 +70,7 @@ func (VERSION) Bump(kind string) error {
 	nextVersion := nextVer.String()
 	files := []string{"magefile.go", "README.md"}
 	for _, file := range files {
-		if err := script.File(file).Replace(version, nextVersion).Error(); err != nil {
+		if _, err := script.File(file).Replace(version, nextVersion).WriteFile(file); err != nil {
 			return fmt.Errorf("failed to bump version `%s`: %w", file, err)
 		}
 	}
