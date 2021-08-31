@@ -3,7 +3,9 @@ module github.com/iwaltgen/magex
 go 1.17
 
 require (
+	github.com/Masterminds/semver v1.5.0
 	github.com/bitfield/script v0.18.0
+	github.com/fatih/color v1.12.0
 	github.com/golangci/golangci-lint v1.42.0
 	github.com/magefile/mage v1.11.0
 	github.com/mattn/go-zglob v0.0.3
@@ -18,7 +20,6 @@ require (
 	github.com/Antonboom/errname v0.1.3 // indirect
 	github.com/BurntSushi/toml v0.4.1 // indirect
 	github.com/Djarvur/go-err113 v0.0.0-20210108212216-aea10b59be24 // indirect
-	github.com/Masterminds/semver v1.5.0 // indirect
 	github.com/OpenPeeDeeP/depguard v1.0.1 // indirect
 	github.com/alexkohler/prealloc v1.0.0 // indirect
 	github.com/ashanbrown/forbidigo v1.2.0 // indirect
@@ -34,7 +35,6 @@ require (
 	github.com/denis-tingajkin/go-header v0.4.2 // indirect
 	github.com/esimonov/ifshort v1.0.2 // indirect
 	github.com/ettle/strcase v0.1.1 // indirect
-	github.com/fatih/color v1.12.0 // indirect
 	github.com/fatih/structtag v1.2.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/fzipp/gocyclo v0.3.1 // indirect

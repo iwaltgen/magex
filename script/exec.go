@@ -1,9 +1,6 @@
-package pipe
+package script
 
 import "github.com/bitfield/script"
-
-// Pipe represents a pipe object with an associated ReadAutoCloser.
-type Pipe = script.Pipe
 
 // Exec runs an external command and returns a pipe containing the output.
 func Exec(cmds ...string) *Pipe {
@@ -14,7 +11,7 @@ func Exec(cmds ...string) *Pipe {
 	pipe := script.NewPipe()
 	for _, cmd := range cmds {
 		pipe = pipe.Exec(cmd)
-		pipe.SetError(nil)
+		// pipe.SetError(nil)
 	}
 	return pipe
 }
