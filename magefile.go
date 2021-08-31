@@ -88,7 +88,7 @@ func (VERSION) Tag() error {
 func Setup() error {
 	defer spinner.Start(100 * time.Millisecond)()
 
-	pkgs, err := dep.GlobImport("tool/tool.go")
+	pkgs, err := dep.GlobImport("tool/deps.go")
 	if err != nil {
 		return fmt.Errorf("failed to load package import: %w", err)
 	}
