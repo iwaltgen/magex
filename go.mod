@@ -5,6 +5,7 @@ go 1.17
 require (
 	github.com/Masterminds/semver v1.5.0
 	github.com/bitfield/script v0.18.0
+	github.com/briandowns/spinner v1.16.0
 	github.com/fatih/color v1.12.0
 	github.com/golangci/golangci-lint v1.42.0
 	github.com/magefile/mage v1.11.0

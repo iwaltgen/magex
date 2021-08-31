@@ -4,6 +4,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/Masterminds/semver"
 	"github.com/fatih/color"
@@ -12,6 +13,7 @@ import (
 
 	"github.com/iwaltgen/magex/dep"
 	"github.com/iwaltgen/magex/script"
+	"github.com/iwaltgen/magex/spinner"
 )
 
 const (
@@ -64,7 +66,13 @@ func (VERSION) Bump(kind string) error {
 		nextVer = curVer.IncPatch()
 
 	default:
-		return fmt.Errorf("invalid version bump argument: %s", kind)
+		return fmt.Errorf(`invalid bump version type: %s
+
+Semantic Versioning (https://semver.org)
+major: bump up next major version
+minor: bump up next minor version
+patch: bump up next patch version
+`, kind)
 	}
 
 	nextVersion := nextVer.String()
@@ -96,6 +104,8 @@ func (VERSION) Tag() error {
 
 // Run install dependency tool
 func Setup() error {
+	defer spinner.Start(100 * time.Millisecond)()
+
 	pkgs, err := dep.GlobImport("tool/tool.go")
 	if err != nil {
 		return fmt.Errorf("failed to load package import: %w", err)
