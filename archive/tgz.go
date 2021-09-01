@@ -12,7 +12,7 @@ import (
 // TGz unarchives tar.gz(tgz) archive file.
 type TGz struct{}
 
-// Unarchive unpacks the .tar.gz(.tgz) file at source to destination.
+// Unarchive unpacks the .tar.gz(.tgz) file from source to destination.
 func (t TGz) Unarchive(src, dest string) error {
 	sf, err := os.Open(src)
 	if err != nil {

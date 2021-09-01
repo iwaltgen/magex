@@ -17,9 +17,9 @@ func mkdir(path string, mode os.FileMode) error {
 
 func writeNewFile(path string, reader io.Reader, mode os.FileMode) error {
 	dir := filepath.Dir(path)
-	err := os.MkdirAll(dir, os.ModePerm)
+	err := mkdir(dir, os.ModePerm)
 	if err != nil {
-		return fmt.Errorf("mkdir `%s`: %w", dir, err)
+		return err
 	}
 
 	file, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE|os.O_TRUNC, mode)

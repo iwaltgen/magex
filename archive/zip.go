@@ -10,7 +10,7 @@ import (
 // Zip unarchives zip archive file.
 type Zip struct{}
 
-// Unarchive unpacks the .zip file at source to destination.
+// Unarchive unpacks the .zip file from source to destination.
 func (z Zip) Unarchive(src, dest string) error {
 	r, err := zip.OpenReader(src)
 	if err != nil {
