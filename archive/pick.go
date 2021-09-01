@@ -24,6 +24,9 @@ func PickFiles(src, dest string, pick map[string]string) error {
 			}
 
 			target := filepath.Join(dest, rename)
+			if err := mkdir(filepath.Dir(target), os.ModePerm); err != nil {
+				return err
+			}
 			if err := os.Rename(path, target); err != nil {
 				return fmt.Errorf("move '%s' -> '%s': %w", path, target, err)
 			}

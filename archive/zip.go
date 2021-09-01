@@ -29,16 +29,16 @@ func (z Zip) Unarchive(src, dest string) error {
 		}
 		defer f.Close()
 
-		fileinfo := zf.FileInfo()
-		fpath := filepath.Join(dest, zf.Name)
-		if fileinfo.IsDir() {
-			if err := mkdir(fpath, fileinfo.Mode()); err != nil {
+		info := zf.FileInfo()
+		path := filepath.Join(dest, zf.Name)
+		if info.IsDir() {
+			if err := mkdir(path, info.Mode()); err != nil {
 				return err
 			}
 			continue
 		}
 
-		if err := writeNewFile(fpath, f, fileinfo.Mode()); err != nil {
+		if err := writeNewFile(path, f, info.Mode()); err != nil {
 			return err
 		}
 	}

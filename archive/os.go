@@ -8,8 +8,12 @@ import (
 )
 
 func mkdir(path string, mode os.FileMode) error {
-	err := os.MkdirAll(path, mode)
+	path, err := filepath.Abs(path)
 	if err != nil {
+		return err
+	}
+
+	if err := os.MkdirAll(path, mode); err != nil {
 		return fmt.Errorf("mkdir `%s`: %w", path, err)
 	}
 	return nil
