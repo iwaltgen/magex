@@ -1,6 +1,10 @@
 package script
 
-import "github.com/bitfield/script"
+import (
+	"io"
+
+	"github.com/bitfield/script"
+)
 
 // Pipe represents a pipe object with an associated ReadAutoCloser.
 type Pipe = script.Pipe
@@ -26,3 +30,10 @@ var ListFiles = script.ListFiles
 
 // Echo returns a pipe containing the supplied string.
 var Echo = script.Echo
+
+// Buffer returns a *Pipe associated with the reader buffers. This is useful for
+// starting pipelines. If there is an error opening the file, the pipe's error
+// status will be set.
+func Buffer(buf io.Reader) *Pipe {
+	return NewPipe().WithReader(buf)
+}

@@ -8,7 +8,8 @@ func init() {
 	defaultClient = resty.New()
 }
 
-func DownloadFile(url, dest string) error {
-	_, err := defaultClient.R().SetOutput(dest).Get(url)
+// DownloadFile implements a web file download.
+func DownloadFile(src, dest string) error {
+	_, err := defaultClient.R().SetOutput(dest).Get(src)
 	return err
 }

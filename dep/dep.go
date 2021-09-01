@@ -26,7 +26,7 @@ func GlobImport(globs ...string) ([]string, error) {
 
 		ret, err := loadImport(files...)
 		if err != nil {
-			return nil, fmt.Errorf("load import(%s): %w", g, err)
+			return nil, fmt.Errorf("load import '%s': %w", g, err)
 		}
 
 		for _, v := range ret {
