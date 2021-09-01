@@ -14,7 +14,7 @@ func TestLoadImport(t *testing.T) {
 		paths    []string
 	}{
 		{
-			name:     "Single",
+			name:     "single",
 			patterns: []string{"testdata1.go"},
 			paths: []string{
 				"github.com/golangci/golangci-lint/cmd/golangci-lint",
@@ -22,7 +22,7 @@ func TestLoadImport(t *testing.T) {
 			},
 		},
 		{
-			name:     "Single",
+			name:     "single",
 			patterns: []string{"testdata2.go"},
 			paths: []string{
 				"github.com/mfridman/tparse",
@@ -30,7 +30,7 @@ func TestLoadImport(t *testing.T) {
 			},
 		},
 		{
-			name:     "Multiple",
+			name:     "multiple",
 			patterns: []string{"testdata1.go", "testdata2.go"},
 			paths: []string{
 				"github.com/golangci/golangci-lint/cmd/golangci-lint",
