@@ -9,42 +9,47 @@ import (
 	"github.com/iwaltgen/magex/http"
 )
 
-var apiURL *url.URL
+var apiURL url.URL
 
 func init() {
-	apiURL = &url.URL{
+	apiURL = url.URL{
 		Scheme: "https",
 		Host:   "api.github.com",
 	}
 }
 
+// https://pkg.go.dev/github.com/tidwall/gjson#readme-path-syntax
+// https://docs.github.com/en/rest/reference/repos#get-the-latest-release
+const (
+	PatternID             = `id`
+	PatternName           = `name`
+	PatternURL            = `url`
+	PatternHtmlURL        = `html_url`
+	PatternTagName        = `tag_name`
+	PatternBody           = `body`
+	PatternAssetCurrentOS = `assets.#(name%%"` + "*" + runtime.GOOS + "*" + runtime.GOARCH + "*" + `").browser_download_url`
+)
+
 // Release gets github latest release info.
-// Pattern: full API response select pattern.
+// pattern: PatternID, PatternTagName, PatternAssetCurrentOS...
 func Release(repo, pattern string) (string, error) {
-	remote := *apiURL
-	remote.Path = path.Join("repos", repo, "releases/latest")
-
-	url := remote.String()
-	return http.Json(url, pattern)
+	url := apiURL
+	url.Path = path.Join("repos", repo, "releases/latest")
+	return http.Json(url.String(), pattern)
 }
 
-// ReleaseAssetURL gets github latest release asset download url.
-// Pattern: release name pattern. (default: '*{{.OS}}*{{.ARCH}}*')
-func ReleaseAssetURL(repo, pattern string) (string, error) {
-	if pattern == "" {
-		pattern = fmt.Sprintf("*%s*%s*", runtime.GOOS, runtime.GOARCH)
-	}
-
-	return Release(repo, fmt.Sprintf(`assets.#(name%%"%s").browser_download_url`, pattern))
-}
-
-// PickReleaseAsset gets github latest release asset download url.
-// Pattern: see ReleaseAssetURL
-func PickReleaseAsset(repo, pattern string, opts ...http.Option) error {
-	url, err := ReleaseAssetURL(repo, pattern)
+// ReleaseAsset gets github latest release asset download url.
+// pattern: PatternAssetCurrentOS...
+func ReleaseAsset(repo, pattern string, opts ...http.Option) error {
+	url, err := Release(repo, pattern)
 	if err != nil {
 		return err
 	}
 
 	return http.File(url, opts...)
+}
+
+// PatternAssetURL makes releases asset name pattern for download URL.
+func PatternAssetURL(pattern string) string {
+	return fmt.Sprintf(`assets.#(name%%"%s").browser_download_url`, pattern)
 }

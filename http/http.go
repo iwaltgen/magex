@@ -41,7 +41,7 @@ func File(url string, opts ...Option) error {
 	filename := path.Base(url)
 	target := filepath.Join(os.TempDir(), filename)
 	if _, err := client.R().SetOutput(target).Get(url); err != nil {
-		return err
+		return fmt.Errorf("download '%s': %w", url, err)
 	}
 	defer os.Remove(target)
 
@@ -87,7 +87,7 @@ func File(url string, opts ...Option) error {
 // Default dest is current directory('.').
 func WithDir(dir string) Option {
 	return func(opt *option) {
-		opt.dir = dir
+		opt.dir = os.ExpandEnv(dir)
 	}
 }
 
@@ -103,7 +103,8 @@ func WithPick(files []string) Option {
 	return func(opt *option) {
 		opt.pick = map[string]string{}
 		for _, v := range files {
-			opt.pick[v] = v
+			path := os.ExpandEnv(v)
+			opt.pick[path] = path
 		}
 	}
 }
@@ -111,7 +112,12 @@ func WithPick(files []string) Option {
 // WithPickRename represents downloads file inner pick and rename option.
 func WithPickRename(pick map[string]string) Option {
 	return func(opt *option) {
-		opt.pick = pick
+		opt.pick = map[string]string{}
+		for k, v := range pick {
+			key := os.ExpandEnv(k)
+			value := os.ExpandEnv(v)
+			opt.pick[key] = value
+		}
 	}
 }
 

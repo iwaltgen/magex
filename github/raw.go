@@ -1,17 +1,20 @@
 package github
 
 import (
-	"fmt"
+	"context"
 	"net/url"
+	"os"
 	"path"
+	"time"
 
 	"github.com/iwaltgen/magex/http"
+	"golang.org/x/sync/errgroup"
 )
 
-var rawFileURL *url.URL
+var rawFileURL url.URL
 
 func init() {
-	rawFileURL = &url.URL{
+	rawFileURL = url.URL{
 		Scheme: "https",
 		Host:   "raw.githubusercontent.com",
 	}
@@ -19,13 +22,18 @@ func init() {
 
 // RawFile downloads github content raw files.
 func RawFile(repo, branch string, files map[string]string) error {
-	// TODO(iwaltgen): use multiple goroutine
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
+	defer cancel()
+
+	g, _ := errgroup.WithContext(ctx)
 	for remote, local := range files {
-		url := *rawFileURL
+		url := rawFileURL
 		url.Path = path.Join(repo, branch, remote)
-		if err := http.File(url.String(), http.WithRename(local)); err != nil {
-			return fmt.Errorf("download file '%v': %w", url, err)
-		}
+		dest := os.ExpandEnv(local)
+
+		g.Go(func() error {
+			return http.File(url.String(), http.WithRename(dest))
+		})
 	}
-	return nil
+	return g.Wait()
 }

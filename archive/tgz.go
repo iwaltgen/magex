@@ -14,6 +14,9 @@ type TGz struct{}
 
 // Unarchive unpacks the .tar.gz(.tgz) file from source to destination.
 func (t TGz) Unarchive(src, dest string) error {
+	src = os.ExpandEnv(src)
+	dest = os.ExpandEnv(dest)
+
 	sf, err := os.Open(src)
 	if err != nil {
 		return fmt.Errorf("open file '%s': %w", src, err)

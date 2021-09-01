@@ -1,6 +1,10 @@
 package script
 
-import "github.com/bitfield/script"
+import (
+	"os"
+
+	"github.com/bitfield/script"
+)
 
 // Exec runs an external command and returns a pipe containing the output.
 func Exec(cmds ...string) *Pipe {
@@ -10,7 +14,7 @@ func Exec(cmds ...string) *Pipe {
 
 	pipe := script.NewPipe()
 	for _, cmd := range cmds {
-		pipe = pipe.Exec(cmd)
+		pipe = pipe.Exec(os.ExpandEnv(cmd))
 		// TODO(iwaltgen): more test cases.
 		// pipe.SetError(nil)
 	}

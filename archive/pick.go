@@ -10,6 +10,7 @@ import (
 // PickFiles moves files from source to destination.
 // Filename matches use 'HasSuffix'. '*' is all files.
 func PickFiles(src, dest string, pick map[string]string) error {
+	dest = os.ExpandEnv(dest)
 	walkFn := func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return fmt.Errorf("walk '%s': %w", path, err)
@@ -34,5 +35,5 @@ func PickFiles(src, dest string, pick map[string]string) error {
 		}
 		return nil
 	}
-	return filepath.Walk(src, walkFn)
+	return filepath.Walk(os.ExpandEnv(src), walkFn)
 }

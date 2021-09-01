@@ -3,6 +3,7 @@ package dep
 import (
 	"fmt"
 	"go/ast"
+	"os"
 	"sort"
 	"strings"
 
@@ -16,7 +17,7 @@ import (
 func GlobImport(globs ...string) ([]string, error) {
 	imports := map[string]struct{}{}
 	for _, g := range globs {
-		files, err := zglob.Glob(g)
+		files, err := zglob.Glob(os.ExpandEnv(g))
 		if err != nil {
 			return nil, err
 		}

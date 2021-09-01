@@ -12,6 +12,9 @@ type Zip struct{}
 
 // Unarchive unpacks the .zip file from source to destination.
 func (z Zip) Unarchive(src, dest string) error {
+	src = os.ExpandEnv(src)
+	dest = os.ExpandEnv(dest)
+
 	r, err := zip.OpenReader(src)
 	if err != nil {
 		return fmt.Errorf("open reader '%s': %w", src, err)

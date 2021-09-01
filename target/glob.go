@@ -2,6 +2,7 @@ package target
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/magefile/mage/target"
 	"github.com/mattn/go-zglob"
@@ -13,7 +14,7 @@ import (
 // Powered by glob: github.com/mattn/go-zglob
 func Glob(dst string, globs ...string) (bool, error) {
 	for _, g := range globs {
-		files, err := zglob.Glob(g)
+		files, err := zglob.Glob(os.ExpandEnv(g))
 		if err != nil {
 			return false, err
 		}

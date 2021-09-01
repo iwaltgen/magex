@@ -7,6 +7,7 @@ import (
 )
 
 // Pipe represents a pipe object with an associated ReadAutoCloser.
+// https://pkg.go.dev/github.com/bitfield/script#readme-quick-start-unix-equivalents
 type Pipe = script.Pipe
 
 // File returns a *Pipe associated with the specified file. This is useful for
