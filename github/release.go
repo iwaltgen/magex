@@ -25,7 +25,7 @@ func Release(repo, pattern string) (string, error) {
 	remote.Path = path.Join("repos", repo, "releases/latest")
 
 	url := remote.String()
-	return http.Get(url, pattern)
+	return http.Json(url, pattern)
 }
 
 // ReleaseAssetURL gets github latest release asset download url.
@@ -46,5 +46,5 @@ func PickReleaseAsset(repo, pattern string, opts ...http.Option) error {
 		return err
 	}
 
-	return http.PickFile(url, opts...)
+	return http.File(url, opts...)
 }

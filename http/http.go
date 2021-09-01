@@ -18,8 +18,8 @@ func init() {
 	client = resty.New()
 }
 
-// Get is requests RESTful API then returns the response parsed value.
-func Get(url, pattern string) (string, error) {
+// Json is requests RESTful API then returns the response parsed value.
+func Json(url, pattern string) (string, error) {
 	res, err := client.R().
 		SetHeader("accept", "application/json").
 		Get(url)
@@ -31,21 +31,16 @@ func Get(url, pattern string) (string, error) {
 	return value.String(), nil
 }
 
-// GetFile downloads a web file.
-func GetFile(url, dest string) error {
-	_, err := client.R().SetOutput(dest).Get(url)
-	return err
-}
-
 // Option represents unpack, pick files option.
 type Option func(*option)
 
-// PickFile downloads a web file and unpack, pick files.
-func PickFile(url string, opts ...Option) error {
+// File downloads file and unpack, pick files.
+// Default: dest is local current directory.
+func File(url string, opts ...Option) error {
 	opt := newOption(opts...)
 	filename := path.Base(url)
 	target := filepath.Join(os.TempDir(), filename)
-	if err := GetFile(url, target); err != nil {
+	if _, err := client.R().SetOutput(target).Get(url); err != nil {
 		return err
 	}
 	defer os.Remove(target)

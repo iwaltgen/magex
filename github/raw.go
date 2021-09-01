@@ -3,9 +3,7 @@ package github
 import (
 	"fmt"
 	"net/url"
-	"os"
 	"path"
-	"path/filepath"
 
 	"github.com/iwaltgen/magex/http"
 )
@@ -25,12 +23,7 @@ func RawFile(repo, branch string, files map[string]string) error {
 	for remote, local := range files {
 		url := *rawFileURL
 		url.Path = path.Join(repo, branch, remote)
-		dir := filepath.Dir(local)
-		if err := os.MkdirAll(dir, os.ModePerm); err != nil {
-			return fmt.Errorf("mkdir '%s': %w", dir, err)
-		}
-
-		if err := http.GetFile(url.String(), local); err != nil {
+		if err := http.File(url.String(), http.WithRename(local)); err != nil {
 			return fmt.Errorf("download file '%v': %w", url, err)
 		}
 	}
