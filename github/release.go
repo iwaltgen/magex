@@ -27,7 +27,7 @@ const (
 	PatternHtmlURL        = `html_url`
 	PatternTagName        = `tag_name`
 	PatternBody           = `body`
-	PatternAssetCurrentOS = `assets.#(name%%"` + "*" + runtime.GOOS + "*" + runtime.GOARCH + "*" + `").browser_download_url`
+	PatternAssetCurrentOS = `assets.#(name%"` + "*" + runtime.GOOS + "*" + runtime.GOARCH + "*" + `").browser_download_url`
 )
 
 // Release gets github latest release info.

@@ -45,21 +45,15 @@ func File(url string, opts ...Option) error {
 	}
 	defer os.Remove(target)
 
-	if err := os.MkdirAll(opt.dir, os.ModePerm); err != nil {
-		return fmt.Errorf("mkdir '%s': %w", opt.dir, err)
-	}
-
 	switch {
 	case opt.rename == "" && len(opt.pick) == 0:
-		dest := filepath.Join(opt.dir, filename)
-		if err := os.Rename(target, dest); err != nil {
-			return fmt.Errorf("move '%s': %w", dest, err)
+		if err := moveFile(target, filepath.Join(opt.dir, filename)); err != nil {
+			return err
 		}
 
 	case opt.rename != "":
-		rename := filepath.Join(opt.dir, opt.rename)
-		if err := os.Rename(target, rename); err != nil {
-			return fmt.Errorf("move '%s': %w", rename, err)
+		if err := moveFile(target, filepath.Join(opt.dir, opt.rename)); err != nil {
+			return err
 		}
 
 	case len(opt.pick) != 0:
@@ -136,4 +130,20 @@ func newOption(opts ...Option) *option {
 		fn(opt)
 	}
 	return opt
+}
+
+func moveFile(target, dest string) error {
+	dest, err := filepath.Abs(dest)
+	if err != nil {
+		return err
+	}
+
+	if err := os.MkdirAll(filepath.Dir(dest), os.ModePerm); err != nil {
+		return fmt.Errorf("mkdir `%s`: %w", dest, err)
+	}
+
+	if err := os.Rename(target, dest); err != nil {
+		return fmt.Errorf("move '%s': %w", dest, err)
+	}
+	return nil
 }
