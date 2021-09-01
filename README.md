@@ -14,9 +14,10 @@ helper extensions for magefile
 
 | package | description                             |
 | ------- | --------------------------------------- |
-| archive | helper package for archive file         |
+| archive | helper package for an archive file      |
 | dep     | helper package for dependencies check   |
-| github  | helper package for github file download |
+| github  | helper package for request GitHub       |
+| http    | helper package for request HTTP         |
 | script  | helper package for \*nix script         |
 | semver  | helper package for semantic versioning  |
 | spinner | helper package for ascii spinner        |
