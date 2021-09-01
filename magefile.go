@@ -18,7 +18,7 @@ import (
 
 const (
 	packageName = "github.com/iwaltgen/magex"
-	version     = "0.2.0"
+	version     = "0.3.0"
 )
 
 type VERSION mg.Namespace
