@@ -133,11 +133,6 @@ func newOption(opts ...Option) *option {
 }
 
 func moveFile(target, dest string) error {
-	dest, err := filepath.Abs(dest)
-	if err != nil {
-		return err
-	}
-
 	if err := os.MkdirAll(filepath.Dir(dest), os.ModePerm); err != nil {
 		return fmt.Errorf("mkdir `%s`: %w", dest, err)
 	}
