@@ -1,0 +1,11 @@
+coverage:
+  status:
+    project:
+      default:
+        threshold: 0.25
+    patch:
+      default:
+        threshold: 0.25
+
+ignore:
+- tool/**/*
