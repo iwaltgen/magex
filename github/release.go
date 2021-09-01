@@ -29,29 +29,22 @@ func Release(repo, pattern string) (string, error) {
 }
 
 // ReleaseAssetURL gets github latest release asset download url.
-// Pattern: release name pattern.
-func ReleaseAssetURL(repo string, opts ...Option) (string, error) {
-	opt := &option{
-		pattern: fmt.Sprintf("*%s*%s*", runtime.GOOS, runtime.GOARCH),
-	}
-	for _, fn := range opts {
-		fn(opt)
+// Pattern: release name pattern. (default: '*{{.OS}}*{{.ARCH}}*')
+func ReleaseAssetURL(repo, pattern string) (string, error) {
+	if pattern == "" {
+		pattern = fmt.Sprintf("*%s*%s*", runtime.GOOS, runtime.GOARCH)
 	}
 
-	return Release(repo, fmt.Sprintf(`assets.#(name%%"%s").browser_download_url`, opt.pattern))
+	return Release(repo, fmt.Sprintf(`assets.#(name%%"%s").browser_download_url`, pattern))
 }
 
-// Option represents search assets option.
-type Option func(*option)
-
-// WithPattern adds the pattern to search assets.name option.
-// Default pattern is `*{{.OS}}*{{.ARCH}}*`.
-func WithPattern(pattern string) Option {
-	return func(opt *option) {
-		opt.pattern = pattern
+// PickReleaseAsset gets github latest release asset download url.
+// Pattern: see ReleaseAssetURL
+func PickReleaseAsset(repo, pattern string, opts ...http.Option) error {
+	url, err := ReleaseAssetURL(repo, pattern)
+	if err != nil {
+		return err
 	}
-}
 
-type option struct {
-	pattern string
+	return http.PickFile(url, opts...)
 }
