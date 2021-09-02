@@ -29,6 +29,14 @@ func TestMkdir(t *testing.T) {
 	}
 }
 
+func TestMkdirReadOnly(t *testing.T) {
+	// when
+	err := mkdir("/root", os.ModePerm)
+
+	// then
+	assert.Error(t, err)
+}
+
 func TestWriteFile(t *testing.T) {
 	dir, err := os.MkdirTemp("", "magex-test-*")
 	assert.NoError(t, err)
@@ -53,6 +61,26 @@ func TestWriteFile(t *testing.T) {
 			info, err := os.Lstat(path)
 			assert.NoError(t, err)
 			assert.NotNil(t, info)
+		})
+	}
+}
+
+func TestWriteFileReadOnly(t *testing.T) {
+	// dataset
+	dataset := []string{"/root/magex", "/etc/magex"}
+
+	// table driven tests
+	for _, v := range dataset {
+		t.Run(v, func(t *testing.T) {
+			// given
+			path := v
+			body := bytes.NewBuffer([]byte("0123456789"))
+
+			// when
+			err := writeNewFile(path, body, os.ModePerm)
+
+			// then
+			assert.Error(t, err)
 		})
 	}
 }
