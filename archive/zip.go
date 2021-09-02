@@ -33,6 +33,10 @@ func (z Zip) Unarchive(src, dest string) error {
 		defer f.Close()
 
 		info := zf.FileInfo()
+		if invalidFilename(zf.Name) {
+			return fmt.Errorf("invalid file name '%s'", zf.Name)
+		}
+
 		path := filepath.Join(dest, zf.Name)
 		if info.IsDir() {
 			if err := mkdir(path, info.Mode()); err != nil {

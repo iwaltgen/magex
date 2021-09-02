@@ -12,7 +12,7 @@ import (
 // TGz unarchives tar.gz(tgz) archive file.
 type TGz struct{}
 
-// Unarchive unpacks the .tar.gz(.tgz) file from source to destination.
+// Unarchive unpacks the .tar.gz(tgz) file from source to destination.
 func (t TGz) Unarchive(src, dest string) error {
 	src = os.ExpandEnv(src)
 	dest = os.ExpandEnv(dest)
@@ -43,6 +43,10 @@ func (t TGz) Unarchive(src, dest string) error {
 			return fmt.Errorf("reader next: %w", err)
 		}
 
+		if invalidFilename(header.Name) {
+			return fmt.Errorf("invalid file name '%s'", header.Name)
+		}
+
 		path := filepath.Join(dest, header.Name)
 		mode := os.FileMode(header.Mode)
 
@@ -52,15 +56,10 @@ func (t TGz) Unarchive(src, dest string) error {
 				return err
 			}
 
-		case tar.TypeReg, tar.TypeRegA, tar.TypeChar, tar.TypeBlock, tar.TypeFifo, tar.TypeGNUSparse:
+		case tar.TypeReg:
 			if err := writeNewFile(path, tr, mode); err != nil {
 				return err
 			}
-
-		case tar.TypeXGlobalHeader, tar.TypeSymlink, tar.TypeLink: // ignore
-
-		default:
-			return fmt.Errorf("unknown type: %v", header.Typeflag)
 		}
 	}
 	return nil

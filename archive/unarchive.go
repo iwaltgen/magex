@@ -42,3 +42,7 @@ func NewUnarchiver(path string) (Unarchiver, error) {
 		return nil, fmt.Errorf("ext '%s': %w", filepath.Ext(path), ErrNotSupportFile)
 	}
 }
+
+func invalidFilename(p string) bool {
+	return p == "" || strings.Contains(p, `\`) || strings.HasPrefix(p, "/") || strings.Contains(p, "../")
+}
