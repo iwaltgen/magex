@@ -15,7 +15,7 @@ func TestLoadImport(t *testing.T) {
 	}{
 		{
 			name:     "single",
-			patterns: []string{"testdata1.go"},
+			patterns: []string{"testdata/deps1.go"},
 			paths: []string{
 				"github.com/golangci/golangci-lint/cmd/golangci-lint",
 				"golang.org/x/tools/cmd/stringer",
@@ -23,7 +23,7 @@ func TestLoadImport(t *testing.T) {
 		},
 		{
 			name:     "single",
-			patterns: []string{"testdata2.go"},
+			patterns: []string{"testdata/deps2.go"},
 			paths: []string{
 				"github.com/mfridman/tparse",
 				"golang.org/x/tools/cmd/stringer",
@@ -31,7 +31,7 @@ func TestLoadImport(t *testing.T) {
 		},
 		{
 			name:     "multiple",
-			patterns: []string{"testdata1.go", "testdata2.go"},
+			patterns: []string{"testdata/deps1.go", "testdata/deps2.go"},
 			paths: []string{
 				"github.com/golangci/golangci-lint/cmd/golangci-lint",
 				"github.com/mfridman/tparse",
@@ -51,4 +51,22 @@ func TestLoadImport(t *testing.T) {
 			assert.Equal(t, v.paths, paths)
 		})
 	}
+}
+
+func TestLoadImportNotExist(t *testing.T) {
+	// when
+	ret, err := GlobImport("testdata/test1.go")
+
+	// then
+	assert.Error(t, err)
+	assert.Nil(t, ret)
+}
+
+func TestLoadImportNotMatch(t *testing.T) {
+	// when
+	ret, err := GlobImport("testdata/test*")
+
+	// then
+	assert.Error(t, err)
+	assert.Nil(t, ret)
 }
