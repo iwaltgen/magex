@@ -15,8 +15,7 @@ func Exec(cmds ...string) *Pipe {
 	pipe := script.NewPipe()
 	for _, cmd := range cmds {
 		pipe = pipe.Exec(os.ExpandEnv(cmd))
-		// TODO(iwaltgen): more test cases.
-		// pipe.SetError(nil)
+		pipe.SetError(nil)
 	}
 	return pipe
 }
