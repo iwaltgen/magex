@@ -13,9 +13,11 @@ func Exec(cmds ...string) *Pipe {
 	}
 
 	pipe := script.NewPipe()
-	for _, cmd := range cmds {
+	for i, cmd := range cmds {
 		pipe = pipe.Exec(os.ExpandEnv(cmd))
-		pipe.SetError(nil)
+		if i < (len(cmds) - 1) {
+			pipe.SetError(nil)
+		}
 	}
 	return pipe
 }
