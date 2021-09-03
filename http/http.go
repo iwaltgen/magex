@@ -46,23 +46,30 @@ func File(url string, opts ...Option) error {
 	opt := newOption(opts...)
 	filename := path.Base(url)
 	target := filepath.Join(os.TempDir(), filename)
-	if _, err := client.R().SetOutput(target).Get(url); err != nil {
+	res, err := client.R().SetOutput(target).Get(url)
+	if err != nil {
 		return fmt.Errorf("download '%s': %w", url, err)
+	}
+	if res.StatusCode() != http.StatusOK {
+		return errors.New(res.Status())
 	}
 	defer os.Remove(target)
 
-	switch {
-	case opt.rename == "" && len(opt.pick) == 0:
+	if opt.rename == "" && len(opt.pick) == 0 {
 		if err := moveFile(target, filepath.Join(opt.dir, filename)); err != nil {
 			return err
 		}
+	}
 
-	case opt.rename != "":
-		if err := moveFile(target, filepath.Join(opt.dir, opt.rename)); err != nil {
+	if opt.rename != "" {
+		dest := filepath.Join(opt.dir, opt.rename)
+		if err := moveFile(target, dest); err != nil {
 			return err
 		}
+		target = dest
+	}
 
-	case len(opt.pick) != 0:
+	if len(opt.pick) != 0 {
 		tmp, err := os.MkdirTemp("", fmt.Sprintf("magex-*-%s", filename))
 		if err != nil {
 			return fmt.Errorf("mkdir tmp: %w", err)
@@ -76,9 +83,6 @@ func File(url string, opts ...Option) error {
 		if err := archive.PickFiles(tmp, opt.dir, opt.pick); err != nil {
 			return err
 		}
-
-	default:
-		return fmt.Errorf("unexpected case: %#v", opt)
 	}
 	return nil
 }
@@ -99,7 +103,7 @@ func WithRename(rename string) Option {
 }
 
 // WithPick represents downloads file inner pick option.
-func WithPick(files []string) Option {
+func WithPick(files ...string) Option {
 	return func(opt *option) {
 		opt.pick = map[string]string{}
 		for _, v := range files {
