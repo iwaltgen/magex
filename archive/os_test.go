@@ -31,7 +31,7 @@ func TestMkdir(t *testing.T) {
 
 func TestMkdirReadOnly(t *testing.T) {
 	// when
-	err := mkdir("/root", os.ModePerm)
+	err := mkdir("/home/unknown", os.ModePerm)
 
 	// then
 	assert.Error(t, err)
@@ -66,21 +66,13 @@ func TestWriteFile(t *testing.T) {
 }
 
 func TestWriteFileReadOnly(t *testing.T) {
-	// dataset
-	dataset := []string{"/root/magex", "/etc/magex"}
+	// given
+	path := "/home/unknown/magex"
+	body := bytes.NewBuffer([]byte("0123456789"))
 
-	// table driven tests
-	for _, v := range dataset {
-		t.Run(v, func(t *testing.T) {
-			// given
-			path := v
-			body := bytes.NewBuffer([]byte("0123456789"))
+	// when
+	err := writeNewFile(path, body, os.ModePerm)
 
-			// when
-			err := writeNewFile(path, body, os.ModePerm)
-
-			// then
-			assert.Error(t, err)
-		})
-	}
+	// then
+	assert.Error(t, err)
 }
