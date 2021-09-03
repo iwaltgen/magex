@@ -25,3 +25,31 @@ func TestTouchRemove(t *testing.T) {
 		})
 	}
 }
+
+func TestListFile(t *testing.T) {
+	// when
+	ret, err := ExecOutput(
+		"ls -l",
+		"wc -l",
+	)
+
+	// then
+	assert.NoError(t, err)
+	assert.NotEmpty(t, ret)
+}
+
+func TestStdoutEmptyCmd(t *testing.T) {
+	// when
+	err := ExecStdout()
+
+	// then
+	assert.NoError(t, err)
+}
+
+func TestOutputEmptyCmd(t *testing.T) {
+	// when
+	_, err := ExecOutput()
+
+	// then
+	assert.NoError(t, err)
+}
