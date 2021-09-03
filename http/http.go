@@ -1,7 +1,9 @@
 package http
 
 import (
+	"errors"
 	"fmt"
+	"net/http"
 	"os"
 	"path"
 	"path/filepath"
@@ -19,12 +21,16 @@ func init() {
 }
 
 // Json is requests RESTful API then returns the response parsed value.
+// https://pkg.go.dev/github.com/tidwall/gjson#readme-path-syntax
 func Json(url, pattern string) (string, error) {
 	res, err := client.R().
 		SetHeader("accept", "application/json").
 		Get(url)
 	if err != nil {
 		return "", err
+	}
+	if res.StatusCode() != http.StatusOK {
+		return "", errors.New(res.Status())
 	}
 
 	value := gjson.GetBytes(res.Body(), pattern)
