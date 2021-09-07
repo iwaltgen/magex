@@ -130,3 +130,25 @@ func TestPickFiles(t *testing.T) {
 		})
 	}
 }
+
+func TestPickFilesPermissionError(t *testing.T) {
+	dest := "/home/unknown/magex"
+	src, err := os.MkdirTemp("", "magex-test-*")
+	assert.NoError(t, err)
+	defer os.RemoveAll(src)
+
+	files := []string{"file1", "file2"}
+	for _, v := range files {
+		path := filepath.Join(src, v)
+		body := bytes.NewBuffer([]byte(""))
+		assert.NoError(t, writeNewFile(path, body, os.ModePerm))
+	}
+
+	// when
+	err = PickFiles(src, dest, map[string]string{
+		"file1": "file1",
+	})
+
+	// then
+	assert.Error(t, err)
+}

@@ -44,7 +44,7 @@ func TestUnarchive(t *testing.T) {
 	}
 }
 
-func TestUnarchiveReadOnly(t *testing.T) {
+func TestUnarchivePermissionError(t *testing.T) {
 	// given
 	files, err := script.ListFiles("testdata").EachLine(func(s string, b *strings.Builder) {
 		if strings.Contains(s, "invalid") {
@@ -58,7 +58,7 @@ func TestUnarchiveReadOnly(t *testing.T) {
 		src := v
 		t.Run(filepath.Base(src), func(t *testing.T) {
 			// given
-			dest := "/etc/magex"
+			dest := "/home/unknown/magex"
 
 			// when
 			err = Unarchive(src, dest)
@@ -69,7 +69,29 @@ func TestUnarchiveReadOnly(t *testing.T) {
 	}
 }
 
-func TestUnarchiveInvalidFormat(t *testing.T) {
+func TestUnarchiveOpenFileError(t *testing.T) {
+	files := []string{
+		"testdata/archive-nf.tgz",
+		"testdata/archive-nf.zip",
+	}
+	for _, v := range files {
+		src := v
+		t.Run(filepath.Base(src), func(t *testing.T) {
+			// given
+			dest, err := os.MkdirTemp("", "magex-test-*")
+			assert.NoError(t, err)
+			defer os.RemoveAll(dest)
+
+			// when
+			err = Unarchive(src, dest)
+
+			// then
+			assert.Error(t, err)
+		})
+	}
+}
+
+func TestUnarchiveOpenReaderError(t *testing.T) {
 	files, err := script.ListFiles("testdata").EachLine(func(s string, b *strings.Builder) {
 		if !strings.Contains(s, "invalid") {
 			return
