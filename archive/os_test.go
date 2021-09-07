@@ -29,7 +29,7 @@ func TestMkdir(t *testing.T) {
 	}
 }
 
-func TestMkdirReadOnly(t *testing.T) {
+func TestMkdirPermissionError(t *testing.T) {
 	// when
 	err := mkdir("/home/unknown", os.ModePerm)
 
@@ -65,7 +65,7 @@ func TestWriteFile(t *testing.T) {
 	}
 }
 
-func TestWriteFileReadOnly(t *testing.T) {
+func TestWriteFilePermissionError(t *testing.T) {
 	// given
 	path := "/home/unknown/magex"
 	body := bytes.NewBuffer([]byte("0123456789"))
