@@ -35,7 +35,7 @@ const (
 func Release(repo, pattern string) (string, error) {
 	url := apiURL
 	url.Path = path.Join("repos", repo, "releases/latest")
-	return http.Json(url.String(), pattern)
+	return http.JsonString(url.String(), pattern)
 }
 
 // ReleaseAsset gets github latest release asset download url.

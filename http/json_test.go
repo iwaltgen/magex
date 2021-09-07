@@ -4,9 +4,25 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/tidwall/gjson"
 )
 
 func TestJson(t *testing.T) {
+	// when
+	ret, err := Json(
+		"https://api.github.com/repos/magefile/mage/releases/latest",
+		"assets.#.name",
+	)
+
+	// then
+	assert.NoError(t, err)
+	assert.Equal(t, gjson.JSON, ret.Type)
+	for _, v := range ret.Array() {
+		assert.Contains(t, v.String(), "mage")
+	}
+}
+
+func TestJsonString(t *testing.T) {
 	// dataset
 	dataset := []struct {
 		name string
@@ -26,7 +42,7 @@ func TestJson(t *testing.T) {
 	for _, v := range dataset {
 		t.Run(v.name, func(t *testing.T) {
 			// when
-			name, err := Json(v.url, "name")
+			name, err := JsonString(v.url, "name")
 
 			// then
 			assert.NoError(t, err)
@@ -38,9 +54,9 @@ func TestJson(t *testing.T) {
 func TestJsonNotFound(t *testing.T) {
 	// when
 	url := "https://api.github.com/repos/iwaltgen/magex/releases/latest"
-	version, err := Json(url, "tag_name")
+	tag, err := JsonString(url, "tag_name")
 
 	// then
 	assert.Error(t, err)
-	assert.Empty(t, version)
+	assert.Empty(t, tag)
 }
