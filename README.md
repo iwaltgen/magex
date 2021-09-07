@@ -5,7 +5,7 @@
 [![GoDoc](https://pkg.go.dev/badge/github.com/iwaltgen/magex)](https://pkg.go.dev/github.com/iwaltgen/magex)
 [![GoReportCard](https://goreportcard.com/badge/github.com/iwaltgen/magex)](https://goreportcard.com/report/github.com/iwaltgen/magex)
 [![CodeQL](https://github.com/iwaltgen/magex/actions/workflows/code-ql.yml/badge.svg)](https://github.com/iwaltgen/magex/actions/workflows/code-ql.yml)
-[![Version](https://img.shields.io/badge/version-v0.5.0-blue.svg)](https://github.com/iwaltgen/magex/tags)
+[![Version](https://img.shields.io/badge/version-v0.5.1-blue.svg)](https://github.com/iwaltgen/magex/tags)
 [![License](https://img.shields.io/github/license/iwaltgen/magex)](https://github.com/iwaltgen/magex/blob/main/LICENSE)
 
 helper extensions for magefile
