@@ -42,8 +42,6 @@ func ExecOutput(cmds ...string) (string, error) {
 // to the program's standard output.
 func ExecStdout(cmds ...string) error {
 	ret, err := ExecOutput(cmds...)
-	if ret != "" {
-		fmt.Print(ret)
-	}
+	fmt.Print(ret)
 	return err
 }
