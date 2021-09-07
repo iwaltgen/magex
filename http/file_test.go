@@ -73,3 +73,39 @@ func TestFileNotFound(t *testing.T) {
 	// then
 	assert.Error(t, err)
 }
+
+func TestFileDirPermissionError(t *testing.T) {
+	// dataset
+	dataset := []struct {
+		name string
+		url  string
+		opts []Option
+	}{
+		{
+			name: "dir",
+			url:  "https://api.github.com/repos/magefile/mage/tarball/v1.11.0",
+			opts: []Option{
+				WithDir("/home/unknown/magex"),
+			},
+		},
+		{
+			name: "rename",
+			url:  "https://api.github.com/repos/magefile/mage/tarball/v1.11.0",
+			opts: []Option{
+				WithDir("/home/unknown/magex"),
+				WithRename("mage.tar.gz"),
+			},
+		},
+	}
+
+	// table driven tests
+	for _, v := range dataset {
+		t.Run(v.name, func(t *testing.T) {
+			// when
+			err := File(v.url, v.opts...)
+
+			// then
+			assert.Error(t, err)
+		})
+	}
+}
