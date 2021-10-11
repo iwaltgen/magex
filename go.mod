@@ -13,7 +13,7 @@ require (
 	github.com/mattn/go-zglob v0.0.3
 	github.com/mfridman/tparse v0.8.3
 	github.com/stretchr/testify v1.7.0
-	github.com/tidwall/gjson v1.9.2
+	github.com/tidwall/gjson v1.9.3
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
 	golang.org/x/tools v0.1.7
 )
@@ -132,7 +132,7 @@ require (
 	github.com/subosito/gotenv v1.2.0 // indirect
 	github.com/tdakkota/asciicheck v0.0.0-20200416200610-e657995f937b // indirect
 	github.com/tetafro/godot v1.4.9 // indirect
-	github.com/tidwall/match v1.1.0 // indirect
+	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/timakin/bodyclose v0.0.0-20200424151742-cb6215831a94 // indirect
 	github.com/tomarrell/wrapcheck/v2 v2.3.0 // indirect
