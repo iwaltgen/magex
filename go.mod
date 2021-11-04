@@ -7,7 +7,7 @@ require (
 	github.com/bitfield/script v0.18.0
 	github.com/briandowns/spinner v1.16.0
 	github.com/fatih/color v1.13.0
-	github.com/go-resty/resty/v2 v2.6.0
+	github.com/go-resty/resty/v2 v2.7.0
 	github.com/golangci/golangci-lint v1.43.0
 	github.com/magefile/mage v1.11.0
 	github.com/mattn/go-zglob v0.0.3
@@ -148,7 +148,7 @@ require (
 	github.com/uudashr/gocognit v1.0.5 // indirect
 	github.com/yeya24/promlinter v0.1.0 // indirect
 	golang.org/x/mod v0.5.0 // indirect
-	golang.org/x/net v0.0.0-20210805182204-aaa1db679c0d // indirect
+	golang.org/x/net v0.0.0-20211029224645-99673261e6eb // indirect
 	golang.org/x/sys v0.0.0-20211013075003-97ac67df715c // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
