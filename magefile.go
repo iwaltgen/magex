@@ -39,7 +39,7 @@ func Test() error {
 	mg.Deps(Lint)
 
 	return script.ExecStdout(
-		"go test ./... -race -json -coverprofile codecov.out -covermode atomic",
+		"go test ./... -json -coverprofile codecov.out -covermode atomic",
 		"tparse -all",
 	)
 }
