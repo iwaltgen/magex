@@ -60,9 +60,9 @@ func TestRawFileNotFound(t *testing.T) {
 
 	// when
 	repo := "envoyproxy/protoc-gen-validate"
-	branch := "master"
+	branch := "main"
 	files := map[string]string{
-		"validate/validate.js.proto": filepath.Join(dir, "api/envoyproxy/pgv/validate.proto"),
+		"validate/validate.not_exists.proto": filepath.Join(dir, "api/envoyproxy/pgv/validate.proto"),
 	}
 	err = RawFile(repo, branch, files)
 
