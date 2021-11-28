@@ -38,6 +38,15 @@ func TestLoadImport(t *testing.T) {
 				"golang.org/x/tools/cmd/stringer",
 			},
 		},
+		{
+			name:     "multiple",
+			patterns: []string{"testdata/deps*"},
+			paths: []string{
+				"github.com/golangci/golangci-lint/cmd/golangci-lint",
+				"github.com/mfridman/tparse",
+				"golang.org/x/tools/cmd/stringer",
+			},
+		},
 	}
 
 	// table driven tests
