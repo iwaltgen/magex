@@ -9,7 +9,7 @@ require (
 	github.com/fatih/color v1.13.0
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/golangci/golangci-lint v1.43.0
-	github.com/magefile/mage v1.12.0
+	github.com/magefile/mage v1.12.1
 	github.com/mattn/go-zglob v0.0.3
 	github.com/mfridman/tparse v0.9.0
 	github.com/stretchr/testify v1.7.0
