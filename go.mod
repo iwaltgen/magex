@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/Masterminds/semver v1.5.0
-	github.com/bitfield/script v0.18.3
+	github.com/bitfield/script v0.18.4
 	github.com/briandowns/spinner v1.18.1
 	github.com/fatih/color v1.13.0
 	github.com/go-resty/resty/v2 v2.7.0
@@ -20,7 +20,7 @@ require (
 
 require (
 	4d63.com/gochecknoglobals v0.1.0 // indirect
-	bitbucket.org/creachadair/shell v0.0.6 // indirect
+	bitbucket.org/creachadair/shell v0.0.7 // indirect
 	github.com/Antonboom/errname v0.1.5 // indirect
 	github.com/Antonboom/nilnil v0.1.0 // indirect
 	github.com/BurntSushi/toml v1.0.0 // indirect
