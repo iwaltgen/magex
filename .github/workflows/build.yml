@@ -31,7 +31,7 @@ jobs:
           ~/go/pkg/mod
           ~/go/bin
           ~/.cache/golangci-lint
-        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        key: ${{ runner.os }}-go-${{ matrix.go }}-${{ hashFiles('**/go.sum') }}
         restore-keys: ${{ runner.os }}-go-
 
     - name: check tools
