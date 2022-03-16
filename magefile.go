@@ -4,9 +4,13 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/fatih/color"
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/config"
+	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
 
@@ -23,10 +27,10 @@ const (
 
 type VERSION mg.Namespace
 
-var gitcmd func(args ...string) error
+var goCmd string
 
 func init() {
-	gitcmd = sh.RunCmd("git")
+	goCmd = mg.GoCmd()
 }
 
 // Run lint
@@ -39,7 +43,7 @@ func Test() error {
 	mg.Deps(Lint)
 
 	return script.ExecStdout(
-		"go test ./... -json -coverprofile codecov.out -covermode atomic",
+		goCmd+" test ./... -json -coverprofile codecov.out -covermode atomic",
 		"tparse -all",
 	)
 }
@@ -51,7 +55,7 @@ func (VERSION) Show() {
 }
 
 // Bump version
-func (VERSION) Bump(typ string) error {
+func (ns VERSION) Bump(typ string) error {
 	current := version
 	next, err := semver.Bump(current, typ)
 	if err != nil {
@@ -65,23 +69,74 @@ func (VERSION) Bump(typ string) error {
 		}
 	}
 
+	worktree, err := ns.worktree()
+	if err != nil {
+		return err
+	}
+
 	for _, file := range files {
-		if err := gitcmd("add", file); err != nil {
+		if _, err := worktree.Add(file); err != nil {
 			return fmt.Errorf("failed to git add command `%s`: %w", file, err)
 		}
 	}
 
-	color.Green("new version: %s", next)
-	return gitcmd("commit", "-m", "chore: bump version")
+	hash, err := worktree.Commit("chore: bump version", &git.CommitOptions{})
+	color.Green("new version: %s [%s]", next, hash.String())
+	return err
 }
 
 // Create current version tag
-func (VERSION) Tag() error {
+func (ns VERSION) Tag() error {
 	tag := "v" + version
-	if err := gitcmd("tag", "-a", tag, "-m", tag+" release"); err != nil {
+	repo, err := git.PlainOpen(".")
+	if err != nil {
+		return err
+	}
+
+	head, err := repo.Head()
+	if err != nil {
+		return err
+	}
+
+	_, err = repo.CreateTag(tag, head.Hash(), &git.CreateTagOptions{
+		Message: tag + " release",
+	})
+	if err != nil {
 		return fmt.Errorf("failed to add git tag: %w", err)
 	}
-	return gitcmd("push", "origin", tag)
+	return repo.Push(&git.PushOptions{
+		Progress: os.Stdout,
+		RefSpecs: []config.RefSpec{
+			config.RefSpec(fmt.Sprintf("refs/tags/%[1]s:refs/tags/%[1]s", tag)),
+		},
+	})
+}
+
+// Show latest version tag
+func (ns VERSION) Tags() error {
+	repo, err := git.PlainOpen(".")
+	if err != nil {
+		return err
+	}
+
+	refs, err := repo.Tags()
+	if err != nil {
+		return err
+	}
+
+	return refs.ForEach(func(r *plumbing.Reference) error {
+		fmt.Println(r.Name())
+		return nil
+	})
+}
+
+func (VERSION) worktree() (*git.Worktree, error) {
+	repo, err := git.PlainOpen(".")
+	if err != nil {
+		return nil, err
+	}
+
+	return repo.Worktree()
 }
 
 // Run install dependency tool
@@ -95,5 +150,5 @@ func Setup() error {
 
 	args := []string{"install"}
 	args = append(args, pkgs...)
-	return sh.RunV(mg.GoCmd(), args...)
+	return sh.RunV(goCmd, args...)
 }
