@@ -104,6 +104,7 @@ func (ns VERSION) Tag() error {
 	if err != nil {
 		return fmt.Errorf("failed to add git tag: %w", err)
 	}
+
 	return repo.Push(&git.PushOptions{
 		Progress: os.Stdout,
 		RefSpecs: []config.RefSpec{

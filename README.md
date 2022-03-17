@@ -8,7 +8,7 @@
 [![Version](https://img.shields.io/badge/version-v0.5.4-blue.svg)](https://github.com/iwaltgen/magex/tags)
 [![License](https://img.shields.io/github/license/iwaltgen/magex)](https://github.com/iwaltgen/magex/blob/main/LICENSE)
 
-helper extensions for magefile
+helper extensions for [magefile](https://github.com/magefile/mage)
 
 ## Extensions
 
@@ -16,6 +16,7 @@ helper extensions for magefile
 | ------- | --------------------------------------- |
 | archive | helper package for an archive file      |
 | dep     | helper package for dependencies check   |
+| git     | helper package for git operation        |
 | github  | helper package for request GitHub       |
 | http    | helper package for request HTTP         |
 | script  | helper package for \*nix script         |
