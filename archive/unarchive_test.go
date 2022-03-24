@@ -1,6 +1,8 @@
 package archive
 
 import (
+	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -11,11 +13,11 @@ import (
 )
 
 func TestUnarchive(t *testing.T) {
-	files, err := script.ListFiles("testdata").EachLine(func(s string, b *strings.Builder) {
-		if strings.Contains(s, "invalid") {
+	files, err := script.ListFiles("testdata").FilterScan(func(line string, w io.Writer) {
+		if strings.Contains(line, "invalid") {
 			return
 		}
-		b.WriteString(s + "\n")
+		fmt.Fprintln(w, line)
 	}).Slice()
 	assert.NoError(t, err)
 
@@ -46,11 +48,11 @@ func TestUnarchive(t *testing.T) {
 
 func TestUnarchivePermissionError(t *testing.T) {
 	// given
-	files, err := script.ListFiles("testdata").EachLine(func(s string, b *strings.Builder) {
-		if strings.Contains(s, "invalid") {
+	files, err := script.ListFiles("testdata").FilterScan(func(line string, w io.Writer) {
+		if strings.Contains(line, "invalid") {
 			return
 		}
-		b.WriteString(s + "\n")
+		fmt.Fprintln(w, line)
 	}).Last(2).Slice()
 	assert.NoError(t, err)
 
@@ -92,11 +94,11 @@ func TestUnarchiveOpenFileError(t *testing.T) {
 }
 
 func TestUnarchiveOpenReaderError(t *testing.T) {
-	files, err := script.ListFiles("testdata").EachLine(func(s string, b *strings.Builder) {
-		if !strings.Contains(s, "invalid") {
+	files, err := script.ListFiles("testdata").FilterScan(func(line string, w io.Writer) {
+		if !strings.Contains(line, "invalid") {
 			return
 		}
-		b.WriteString(s + "\n")
+		fmt.Fprintln(w, line)
 	}).Slice()
 	assert.NoError(t, err)
 

@@ -13,14 +13,11 @@ func TestTouchRemove(t *testing.T) {
 	// table driven tests
 	for _, v := range dataset {
 		t.Run(v, func(t *testing.T) {
-			// when
-			cmds := []string{
-				"touch " + v,
-				"rm -f " + v,
-			}
-			err := ExecStdout(cmds...)
+			// expect
+			err := ExecStdout("touch " + v)
+			assert.NoError(t, err)
 
-			// then
+			err = ExecStdout("rm -f " + v)
 			assert.NoError(t, err)
 		})
 	}
