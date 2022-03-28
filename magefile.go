@@ -18,6 +18,8 @@ import (
 	"github.com/iwaltgen/magex/spinner"
 )
 
+const versionPrefix = "v"
+
 var goCmd string
 
 func init() {
@@ -41,31 +43,36 @@ func Test() error {
 
 // Show current version
 func Version() error {
-	version, err := currentVersion()
+	cv, err := currentVersion()
 	if err != nil {
 		return err
 	}
 
-	color.Green(version)
+	color.Green(versionPrefix + cv)
 	return nil
 }
 
 // Release tag version [major, minor, patch]
 func Release(typ string) error {
-	current, err := currentVersion()
+	cv, err := currentVersion()
 	if err != nil {
 		return err
 	}
 
-	next, err := semver.Bump(current, typ)
+	nv, err := semver.Bump(cv, typ)
 	if err != nil {
 		return err
 	}
 
-	return git.CreateTag("v"+next,
-		git.WithCreateTagMessage("release v"+next),
+	version := versionPrefix + nv
+	err = git.CreateTag(version,
+		git.WithCreateTagMessage("release "+version),
 		git.WithCreateTagProgress(os.Stdout),
 	)
+	if err == nil {
+		color.Green(version)
+	}
+	return err
 }
 
 // Run install dependency tool
