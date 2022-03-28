@@ -62,8 +62,8 @@ func Release(typ string) error {
 		return err
 	}
 
-	return git.CreateTag(next,
-		git.WithCreateTagMessage("release "+next),
+	return git.CreateTag("v"+next,
+		git.WithCreateTagMessage("release v"+next),
 		git.WithCreateTagProgress(os.Stdout),
 	)
 }
