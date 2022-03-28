@@ -7,7 +7,28 @@ import (
 	"github.com/Masterminds/semver"
 )
 
-// Bump version
+// Latest find latest version.
+func Latest(versions []string) (string, error) {
+	var ret *semver.Version
+	for _, v := range versions {
+		ver, err := semver.NewVersion(v)
+		if err != nil {
+			return "", err
+		}
+
+		if ret == nil {
+			ret = ver
+			continue
+		}
+
+		if ver.GreaterThan(ret) {
+			ret = ver
+		}
+	}
+	return ret.String(), nil
+}
+
+// Bump increase semantic version parts.
 func Bump(version, typ string) (string, error) {
 	current, _ := semver.NewVersion(version)
 	var next semver.Version
