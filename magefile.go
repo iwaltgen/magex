@@ -62,7 +62,10 @@ func Release(typ string) error {
 		return err
 	}
 
-	return git.CreateTag(next, git.WithCreateTagProgress(os.Stdout))
+	return git.CreateTag(next,
+		git.WithCreateTagMessage("release "+next),
+		git.WithCreateTagProgress(os.Stdout),
+	)
 }
 
 // Run install dependency tool
