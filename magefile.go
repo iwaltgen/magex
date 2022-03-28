@@ -126,7 +126,7 @@ func (ns VERSION) Tags() error {
 	}
 
 	return refs.ForEach(func(r *plumbing.Reference) error {
-		fmt.Println(r.Name())
+		fmt.Println(r.Name().Short())
 		return nil
 	})
 }

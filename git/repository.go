@@ -9,6 +9,39 @@ import (
 	"github.com/go-git/go-git/v5/plumbing/protocol/packp/sideband"
 )
 
+// Repository represents a git repository
+type Repository = git.Repository
+
+// Worktree represents a git worktree.
+type Worktree = git.Worktree
+
+// NewRepository opens a git repository from the given path. It detects if the
+// repository is bare or a normal one. If the path doesn't contain a valid
+// repository ErrRepositoryNotExists is returned
+func NewRepository(path string) (*Repository, error) {
+	return git.PlainOpen(path)
+}
+
+// Tags returns all the tag References in a repository.
+func Tags(path string) ([]string, error) {
+	repo, err := NewRepository(path)
+	if err != nil {
+		return nil, err
+	}
+
+	refs, err := repo.Tags()
+	if err != nil {
+		return nil, err
+	}
+
+	var ret []string
+	err = refs.ForEach(func(r *plumbing.Reference) error {
+		ret = append(ret, r.Name().Short())
+		return nil
+	})
+	return ret, err
+}
+
 // CreateTagOption describes how a tag object should be created.
 type CreateTagOption func(*createTagOptions)
 
@@ -24,7 +57,7 @@ type createTagOptions struct {
 // otherwise a lightweight tag is created.
 func CreateTag(tag string, opts ...CreateTagOption) error {
 	opt := newCreateTagOptions(tag, opts...)
-	repo, err := git.PlainOpen(opt.path)
+	repo, err := NewRepository(opt.path)
 	if err != nil {
 		return fmt.Errorf("failed to open repository: %w", err)
 	}
