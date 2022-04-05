@@ -1,7 +1,9 @@
 package script
 
 import (
+	"bytes"
 	"io"
+	"os"
 
 	"github.com/bitfield/script"
 )
@@ -44,9 +46,19 @@ var IfExists = script.IfExists
 // strings, one per line.
 var Slice = script.Slice
 
-// Buffer returns a *Pipe associated with the reader buffers. This is useful for
-// starting pipelines. If there is an error opening the file, the pipe's error
-// status will be set.
+// Buffer returns a *Pipe associated with the reader buffers.
+// This is useful for starting pipelines.
 func Buffer(buf io.Reader) *Pipe {
 	return script.NewPipe().WithReader(buf)
+}
+
+// ReadFile returns a *Pipe associated with the reader file.
+// This is useful for starting pipelines.
+func ReadFile(name string) *Pipe {
+	p := script.NewPipe()
+	body, err := os.ReadFile(name)
+	if err != nil {
+		return p.WithError(err)
+	}
+	return p.WithReader(bytes.NewBuffer(body))
 }
