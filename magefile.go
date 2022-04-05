@@ -68,7 +68,7 @@ func Release(typ string) error {
 	version := nv
 	err = git.CreateTag(version,
 		git.WithCreateTagMessage("release "+version),
-		git.WithCreateTagProgress(os.Stdout),
+		git.WithCreateTagPushProgress(os.Stdout),
 	)
 	if err == nil {
 		color.Green(version)

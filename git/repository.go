@@ -129,8 +129,8 @@ func WithCreateTagRemote(remote string) CreateTagOption {
 	}
 }
 
-// WithCreateTagProgress adds push progress.
-func WithCreateTagProgress(progress sideband.Progress) CreateTagOption {
+// WithCreateTagPushProgress adds push progress.
+func WithCreateTagPushProgress(progress sideband.Progress) CreateTagOption {
 	return func(o *createTagOptions) {
 		WithCreateTagPush()(o)
 		o.push.Progress = progress
