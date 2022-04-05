@@ -18,9 +18,10 @@ import (
 	"github.com/iwaltgen/magex/spinner"
 )
 
-const versionPrefix = "v"
-
-var goCmd string
+var (
+	goCmd   string
+	version = semver.NewVersion("v")
+)
 
 func init() {
 	goCmd = mg.GoCmd()
@@ -48,7 +49,7 @@ func Version() error {
 		return err
 	}
 
-	color.Green(versionPrefix + cv)
+	color.Green(cv)
 	return nil
 }
 
@@ -59,12 +60,12 @@ func Release(typ string) error {
 		return err
 	}
 
-	nv, err := semver.Bump(cv, typ)
+	nv, err := semver.Bump(cv, semver.ParseBumpType(typ))
 	if err != nil {
 		return err
 	}
 
-	version := versionPrefix + nv
+	version := nv
 	err = git.CreateTag(version,
 		git.WithCreateTagMessage("release "+version),
 		git.WithCreateTagProgress(os.Stdout),
@@ -95,7 +96,7 @@ func currentVersion() (string, error) {
 		return "", err
 	}
 
-	latest, err := semver.Latest(tags)
+	latest, err := version.Latest(tags)
 	if err != nil {
 		return "", err
 	}
