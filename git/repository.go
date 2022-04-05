@@ -50,7 +50,7 @@ type createTagOptions struct {
 	refName plumbing.ReferenceName // Default: "HEAD"
 	tag     *git.CreateTagOptions  // Default: message -> ""
 	push    *git.PushOptions       // Issue: ssh-keyscan github.com >> ~/.ssh/known_hosts
-	// TODO(iwaltgen): with update file option.
+	hook    func(*Repository) error
 }
 
 // CreateTag creates a tag. If opts is included, the tag is an annotated tag,
@@ -60,6 +60,10 @@ func CreateTag(tag string, opts ...CreateTagOption) error {
 	repo, err := NewRepository(opt.path)
 	if err != nil {
 		return fmt.Errorf("failed to open repository: %w", err)
+	}
+
+	if err := opt.hook(repo); err != nil {
+		return fmt.Errorf("failed to hook: %w", err)
 	}
 
 	ref, err := repo.Reference(opt.refName, true)
@@ -101,6 +105,13 @@ func WithCreateTagMessage(message string) CreateTagOption {
 	}
 }
 
+// WithCreateTagHook adds a tag create hook apply files.
+func WithCreateTagHook(fn func(*Repository) error) CreateTagOption {
+	return func(o *createTagOptions) {
+		o.hook = fn
+	}
+}
+
 // WithCreateTagPush adds a push performs.
 func WithCreateTagPush() CreateTagOption {
 	return func(o *createTagOptions) {
@@ -118,7 +129,7 @@ func WithCreateTagRemote(remote string) CreateTagOption {
 	}
 }
 
-// WithCreateTagRemote adds push progress.
+// WithCreateTagProgress adds push progress.
 func WithCreateTagProgress(progress sideband.Progress) CreateTagOption {
 	return func(o *createTagOptions) {
 		WithCreateTagPush()(o)
@@ -131,6 +142,9 @@ func newCreateTagOptions(tag string, opts ...CreateTagOption) *createTagOptions 
 		path:    ".",
 		refName: plumbing.HEAD,
 		tag:     &git.CreateTagOptions{},
+		hook: func(r *Repository) error {
+			return nil
+		},
 	}
 	for _, v := range opts {
 		v(ret)
