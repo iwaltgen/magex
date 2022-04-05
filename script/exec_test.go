@@ -39,11 +39,3 @@ func TestStdoutEmptyCmd(t *testing.T) {
 	// then
 	assert.NoError(t, err)
 }
-
-func TestOutputEmptyCmd(t *testing.T) {
-	// when
-	_, err := Exec().String()
-
-	// then
-	assert.NoError(t, err)
-}
