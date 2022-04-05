@@ -20,11 +20,12 @@ import (
 
 var (
 	goCmd   string
-	version = semver.NewVersion("v")
+	version semver.Version
 )
 
 func init() {
 	goCmd = mg.GoCmd()
+	version = semver.NewVersion("v")
 }
 
 // Run lint
@@ -60,18 +61,17 @@ func Release(typ string) error {
 		return err
 	}
 
-	nv, err := semver.Bump(cv, semver.ParseBumpType(typ))
+	nv, err := version.Bump(cv, semver.ParseBumpType(typ))
 	if err != nil {
 		return err
 	}
 
-	version := nv
-	err = git.CreateTag(version,
-		git.WithCreateTagMessage("release "+version),
+	err = git.CreateTag(nv,
+		git.WithCreateTagMessage("release "+nv),
 		git.WithCreateTagPushProgress(os.Stdout),
 	)
 	if err == nil {
-		color.Green(version)
+		color.Green(nv)
 	}
 	return err
 }
