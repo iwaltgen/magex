@@ -29,6 +29,21 @@ var ListFiles = script.ListFiles
 // Echo returns a pipe containing the supplied string.
 var Echo = script.Echo
 
+// Args creates a pipe containing the program's command-line arguments, one per line.
+var Args = script.Args
+
+// IfExists tests whether the specified file exists, and creates a pipe whose
+// error status reflects the result. If the file doesn't exist, the pipe's error
+// status will be set, and if the file does exist, the pipe will have no error
+// status. This can be used to do some operation only if a given file exists:
+//
+// IfExists("/foo/bar").Exec("/usr/bin/something")
+var IfExists = script.IfExists
+
+// Slice creates a pipe containing each element of the supplied slice of
+// strings, one per line.
+var Slice = script.Slice
+
 // Buffer returns a *Pipe associated with the reader buffers. This is useful for
 // starting pipelines. If there is an error opening the file, the pipe's error
 // status will be set.

@@ -1,8 +1,6 @@
 package script
 
 import (
-	"fmt"
-	"io/ioutil"
 	"os"
 
 	"github.com/bitfield/script"
@@ -15,33 +13,20 @@ func Exec(cmds ...string) *Pipe {
 	}
 
 	pipe := script.NewPipe()
-	for i, cmd := range cmds {
+	for _, cmd := range cmds {
 		pipe = pipe.Exec(os.ExpandEnv(cmd))
-		if i < (len(cmds) - 1) {
-			pipe.SetError(nil)
-		}
 	}
 	return pipe
-}
-
-// ExecOutput runs an external command and returns the contents of the pipe.
-func ExecOutput(cmds ...string) (string, error) {
-	pipe := Exec(cmds...)
-	if pipe == nil {
-		return "", nil
-	}
-
-	res, err := ioutil.ReadAll(pipe.Reader)
-	if err != nil {
-		return "", err
-	}
-	return string(res), pipe.Error()
 }
 
 // ExecStdout runs an external command and writes the contents of the pipe
 // to the program's standard output.
 func ExecStdout(cmds ...string) error {
-	ret, err := ExecOutput(cmds...)
-	fmt.Print(ret)
+	pipe := Exec(cmds...)
+	if pipe == nil {
+		return nil
+	}
+
+	_, err := pipe.Stdout()
 	return err
 }

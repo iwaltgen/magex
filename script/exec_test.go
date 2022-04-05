@@ -25,10 +25,7 @@ func TestTouchRemove(t *testing.T) {
 
 func TestListFile(t *testing.T) {
 	// when
-	ret, err := ExecOutput(
-		"ls -l",
-		"wc -l",
-	)
+	ret, err := Exec("ls -l", "wc -l").String()
 
 	// then
 	assert.NoError(t, err)
@@ -45,7 +42,7 @@ func TestStdoutEmptyCmd(t *testing.T) {
 
 func TestOutputEmptyCmd(t *testing.T) {
 	// when
-	_, err := ExecOutput()
+	_, err := Exec().String()
 
 	// then
 	assert.NoError(t, err)
