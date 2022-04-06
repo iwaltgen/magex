@@ -24,5 +24,5 @@ func TestReadFile(t *testing.T) {
 
 	// then
 	assert.NoError(t, err)
-	assert.Len(t, list, 64)
+	assert.Greater(t, len(list), 65)
 }
