@@ -12,9 +12,9 @@ import (
 // https://pkg.go.dev/github.com/bitfield/script#readme-quick-start-unix-equivalents
 type Pipe = script.Pipe
 
-// File returns a *Pipe associated with the specified file. This is useful for
-// starting pipelines. If there is an error opening the file, the pipe's error
-// status will be set.
+// File returns a *Pipe associated with the specified file.
+// This is useful for starting pipelines.
+// If there is an error opening the file, the pipe's error status will be set.
 var File = script.File
 
 // FindFiles takes a directory path and returns a pipe listing all the files in
@@ -48,12 +48,14 @@ var Slice = script.Slice
 
 // Buffer returns a *Pipe associated with the reader buffers.
 // This is useful for starting pipelines.
+// If there is an error opening the file, the pipe's error status will be set.
 func Buffer(buf io.Reader) *Pipe {
 	return script.NewPipe().WithReader(buf)
 }
 
-// ReadFile returns a *Pipe associated with the reader file.
+// ReadFile returns a *Pipe associated with the read all file buffers.
 // This is useful for starting pipelines.
+// If there is an error opening the file, the pipe's error status will be set.
 func ReadFile(name string) *Pipe {
 	p := script.NewPipe()
 	body, err := os.ReadFile(name)
