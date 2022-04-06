@@ -47,7 +47,7 @@ jobs:
     - name: test
       run: mage test
 
-    - uses: codecov/codecov-action@v2
+    - uses: codecov/codecov-action@v3
       with:
         token: ${{secrets.CODECOV_TOKEN}}
         file: ./codecov.out
