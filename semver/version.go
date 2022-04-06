@@ -24,6 +24,9 @@ func (v Version) Latest(versions []string) (string, error) {
 	for _, v := range versions {
 		ver, err := semver.NewVersion(v)
 		if err != nil {
+			if err == semver.ErrInvalidSemVer {
+				continue
+			}
 			return "", err
 		}
 
