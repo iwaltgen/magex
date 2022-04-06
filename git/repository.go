@@ -12,9 +12,6 @@ import (
 // Repository represents a git repository
 type Repository = git.Repository
 
-// Worktree represents a git worktree.
-type Worktree = git.Worktree
-
 // NewRepository opens a git repository from the given path. It detects if the
 // repository is bare or a normal one. If the path doesn't contain a valid
 // repository ErrRepositoryNotExists is returned
