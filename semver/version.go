@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/Masterminds/semver"
+	"github.com/iwaltgen/magex/git"
 )
 
 // Version implements semantic versioning handle.
@@ -16,6 +17,21 @@ func NewVersion(prefix string) Version {
 	return Version{
 		prefix: prefix,
 	}
+}
+
+// Latest find latest git tag version.
+func (v Version) LatestTag(path string) (string, error) {
+	tags, err := git.Tags(".")
+	if err != nil {
+		return "", err
+	}
+
+	latest, err := v.Latest(tags)
+	if err != nil {
+		return "", err
+	}
+
+	return latest, nil
 }
 
 // Latest find latest version.

@@ -18,15 +18,7 @@ import (
 	"github.com/iwaltgen/magex/spinner"
 )
 
-var (
-	goCmd   string
-	version semver.Version
-)
-
-func init() {
-	goCmd = mg.GoCmd()
-	version = semver.NewVersion("v")
-}
+var goCmd = mg.GoCmd()
 
 // Run lint
 func Lint() error {
@@ -45,7 +37,7 @@ func Test() error {
 
 // Show current version
 func Version() error {
-	cv, err := currentVersion()
+	cv, err := semver.LatestTag(".")
 	if err != nil {
 		return err
 	}
@@ -56,12 +48,12 @@ func Version() error {
 
 // Release tag version [major, minor, patch]
 func Release(typ string) error {
-	cv, err := currentVersion()
+	cv, err := semver.LatestTag(".")
 	if err != nil {
 		return err
 	}
 
-	nv, err := version.Bump(cv, semver.ParseBumpType(typ))
+	nv, err := semver.Bump(cv, semver.ParseBumpType(typ))
 	if err != nil {
 		return err
 	}
@@ -88,18 +80,4 @@ func Setup() error {
 	args := []string{"install"}
 	args = append(args, pkgs...)
 	return sh.RunV(goCmd, args...)
-}
-
-func currentVersion() (string, error) {
-	tags, err := git.Tags(".")
-	if err != nil {
-		return "", err
-	}
-
-	latest, err := version.Latest(tags)
-	if err != nil {
-		return "", err
-	}
-
-	return latest, nil
 }
