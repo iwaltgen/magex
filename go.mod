@@ -12,7 +12,7 @@ require (
 	github.com/golangci/golangci-lint v1.46.2
 	github.com/magefile/mage v1.13.0
 	github.com/mattn/go-zglob v0.0.3
-	github.com/mfridman/tparse v0.11.0
+	github.com/mfridman/tparse v0.11.1
 	github.com/stretchr/testify v1.8.0
 	github.com/tidwall/gjson v1.14.1
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
