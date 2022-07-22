@@ -9,7 +9,7 @@ require (
 	github.com/fatih/color v1.13.0
 	github.com/go-git/go-git/v5 v5.4.2
 	github.com/go-resty/resty/v2 v2.7.0
-	github.com/golangci/golangci-lint v1.47.1
+	github.com/golangci/golangci-lint v1.47.2
 	github.com/magefile/mage v1.13.0
 	github.com/mattn/go-zglob v0.0.3
 	github.com/mfridman/tparse v0.11.1
