@@ -14,7 +14,7 @@ require (
 	github.com/mattn/go-zglob v0.0.3
 	github.com/mfridman/tparse v0.11.1
 	github.com/stretchr/testify v1.8.0
-	github.com/tidwall/gjson v1.14.2
+	github.com/tidwall/gjson v1.14.3
 	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
 	golang.org/x/tools v0.1.12
 )
