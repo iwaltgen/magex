@@ -33,16 +33,19 @@ jobs:
           ~/.cache/golangci-lint
         key: ${{ runner.os }}-go-${{ matrix.go }}-${{ hashFiles('**/go.sum') }}
         restore-keys: ${{ runner.os }}-go-${{ matrix.go }}
+    - uses: golangci/golangci-lint-action@v3
 
     - name: check tools
       id: check_tools
       uses: andstor/file-existence-action@v1
       with:
-        files: '/home/runner/go/bin/mage, /home/runner/go/bin/golangci-lint, /home/runner/go/bin/tparse'
+        files: '/home/runner/go/bin/mage, /home/runner/go/bin/tparse'
 
     - name: setup tools
       if: steps.check_tools.outputs.files_exists != 'true'
-      run: go run ./tool/mage.go setup
+      run: |
+        go install github.com/magefile/mage
+        go install github.com/mfridman/tparse
 
     - name: test
       run: mage test
