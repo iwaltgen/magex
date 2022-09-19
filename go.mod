@@ -10,7 +10,7 @@ require (
 	github.com/go-git/go-git/v5 v5.4.2
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/golangci/golangci-lint v1.49.0
-	github.com/magefile/mage v1.13.0
+	github.com/magefile/mage v1.14.0
 	github.com/mattn/go-zglob v0.0.3
 	github.com/mfridman/tparse v0.11.1
 	github.com/stretchr/testify v1.8.0
