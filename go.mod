@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/Masterminds/semver v1.5.0
-	github.com/bitfield/script v0.20.2
+	github.com/bitfield/script v0.21.1
 	github.com/briandowns/spinner v1.19.0
 	github.com/fatih/color v1.13.0
 	github.com/go-git/go-git/v5 v5.4.2
