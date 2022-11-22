@@ -12,7 +12,7 @@ require (
 	github.com/magefile/mage v1.14.0
 	github.com/mattn/go-zglob v0.0.4
 	github.com/stretchr/testify v1.8.1
-	github.com/tidwall/gjson v1.14.3
+	github.com/tidwall/gjson v1.14.4
 	golang.org/x/sync v0.1.0
 	golang.org/x/tools v0.3.0
 )
