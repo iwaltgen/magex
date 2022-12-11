@@ -17,8 +17,6 @@ require (
 	golang.org/x/tools v0.4.0
 )
 
-replace github.com/pjbgf/sha1cd => github.com/pjbgf/sha1cd v0.2.3
-
 require (
 	bitbucket.org/creachadair/shell v0.0.7 // indirect
 	github.com/Microsoft/go-winio v0.5.2 // indirect
