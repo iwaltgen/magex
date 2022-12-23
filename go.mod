@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/Masterminds/semver v1.5.0
 	github.com/bitfield/script v0.21.4
-	github.com/briandowns/spinner v1.19.0
+	github.com/briandowns/spinner v1.20.0
 	github.com/fatih/color v1.13.0
 	github.com/go-git/go-git/v5 v5.5.1
 	github.com/go-resty/resty/v2 v2.7.0
@@ -48,6 +48,7 @@ require (
 	golang.org/x/mod v0.7.0 // indirect
 	golang.org/x/net v0.3.0 // indirect
 	golang.org/x/sys v0.3.0 // indirect
+	golang.org/x/term v0.3.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
