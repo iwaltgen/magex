@@ -42,3 +42,10 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# direnv
+.envrc
+.direnv
+
+# asdf
+.tool-versions
