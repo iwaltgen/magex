@@ -6,7 +6,7 @@ require (
 	github.com/Masterminds/semver v1.5.0
 	github.com/bitfield/script v0.21.4
 	github.com/briandowns/spinner v1.23.0
-	github.com/fatih/color v1.14.1
+	github.com/fatih/color v1.15.0
 	github.com/go-git/go-git/v5 v5.6.0
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/magefile/mage v1.14.0
