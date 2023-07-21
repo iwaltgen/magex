@@ -7,7 +7,7 @@ require (
 	github.com/bitfield/script v0.22.0
 	github.com/briandowns/spinner v1.23.0
 	github.com/fatih/color v1.15.0
-	github.com/go-git/go-git/v5 v5.7.0
+	github.com/go-git/go-git/v5 v5.8.0
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/magefile/mage v1.15.0
 	github.com/mattn/go-zglob v0.0.4
