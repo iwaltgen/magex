@@ -13,7 +13,7 @@ require (
 	github.com/mattn/go-zglob v0.0.4
 	github.com/stretchr/testify v1.8.4
 	github.com/tidwall/gjson v1.17.0
-	golang.org/x/sync v0.4.0
+	golang.org/x/sync v0.5.0
 	golang.org/x/tools v0.14.0
 )
 
