@@ -37,7 +37,7 @@ jobs:
 
     - name: check tools
       id: check_tools
-      uses: andstor/file-existence-action@v2
+      uses: andstor/file-existence-action@v3
       with:
         files: '/home/runner/go/bin/mage, /home/runner/go/bin/tparse'
 
