@@ -11,7 +11,7 @@ require (
 	github.com/go-resty/resty/v2 v2.11.0
 	github.com/magefile/mage v1.15.0
 	github.com/mattn/go-zglob v0.0.4
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	github.com/tidwall/gjson v1.17.1
 	golang.org/x/sync v0.6.0
 	golang.org/x/tools v0.18.0
