@@ -33,7 +33,7 @@ jobs:
           ~/.cache/golangci-lint
         key: ${{ runner.os }}-go-${{ matrix.go }}-${{ hashFiles('**/go.sum') }}
         restore-keys: ${{ runner.os }}-go-${{ matrix.go }}
-    - uses: golangci/golangci-lint-action@v4
+    - uses: golangci/golangci-lint-action@v5
 
     - name: check tools
       id: check_tools
