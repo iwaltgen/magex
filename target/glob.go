@@ -19,7 +19,7 @@ func Glob(dst string, globs ...string) (bool, error) {
 			return false, err
 		}
 		if len(files) == 0 {
-			return false, fmt.Errorf("glob didn't match any files: %s" + g)
+			return false, fmt.Errorf("glob didn't match any files: %s", g)
 		}
 
 		shouldDo, err := target.Path(dst, files...)
