@@ -8,7 +8,7 @@ require (
 	github.com/briandowns/spinner v1.23.1
 	github.com/fatih/color v1.17.0
 	github.com/go-git/go-git/v5 v5.12.0
-	github.com/go-resty/resty/v2 v2.15.2
+	github.com/go-resty/resty/v2 v2.15.3
 	github.com/magefile/mage v1.15.0
 	github.com/mattn/go-zglob v0.0.4
 	github.com/stretchr/testify v1.9.0
