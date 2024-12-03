@@ -4,7 +4,7 @@ go 1.22.0
 
 require (
 	github.com/Masterminds/semver v1.5.0
-	github.com/bitfield/script v0.23.0
+	github.com/bitfield/script v0.24.0
 	github.com/briandowns/spinner v1.23.1
 	github.com/fatih/color v1.18.0
 	github.com/go-git/go-git/v5 v5.12.0
