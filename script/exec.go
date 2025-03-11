@@ -12,7 +12,7 @@ func Exec(cmds ...string) *Pipe {
 		return nil
 	}
 
-	pipe := script.NewPipe()
+	pipe := script.NewPipe().WithStderr(os.Stderr)
 	for _, cmd := range cmds {
 		pipe = pipe.Exec(os.ExpandEnv(cmd))
 	}
