@@ -86,6 +86,5 @@ func errTypeWithUsage(typ BumpType) error {
 Semantic Versioning (https://semver.org)
 major: bump up next major version
 minor: bump up next minor version
-patch: bump up next patch version
-`, typ)
+patch: bump up next patch version`, typ)
 }
