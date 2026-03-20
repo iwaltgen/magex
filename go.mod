@@ -1,12 +1,12 @@
 module github.com/iwaltgen/magex
 
-go 1.24.0
+go 1.25.0
 
 require (
 	github.com/Masterminds/semver v1.5.0
 	github.com/bitfield/script v0.24.1
 	github.com/briandowns/spinner v1.23.2
-	github.com/fatih/color v1.18.0
+	github.com/fatih/color v1.19.0
 	github.com/go-git/go-git/v5 v5.17.0
 	github.com/go-resty/resty/v2 v2.17.2
 	github.com/magefile/mage v1.16.1
@@ -231,7 +231,7 @@ require (
 	golang.org/x/exp/typeparams v0.0.0-20250210185358-939b2ce775ac // indirect
 	golang.org/x/mod v0.33.0 // indirect
 	golang.org/x/net v0.50.0 // indirect
-	golang.org/x/sys v0.41.0 // indirect
+	golang.org/x/sys v0.42.0 // indirect
 	golang.org/x/term v0.40.0 // indirect
 	golang.org/x/text v0.34.0 // indirect
 	golang.org/x/tools/go/expect v0.1.1-deprecated // indirect
